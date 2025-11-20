@@ -1,4 +1,4 @@
-package com.eventsphere.model;
+package com.eventbooking.model;
 
 import jakarta.persistence.*;
 
