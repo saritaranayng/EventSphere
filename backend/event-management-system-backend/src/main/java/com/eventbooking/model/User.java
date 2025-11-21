@@ -1,6 +1,12 @@
 package com.eventbooking.model;
 
 import jakarta.persistence.*;
+import java.util.List;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+// import jakarta.validation.constraints.NotNull;
+
+
 
 @Entity
 @Table(name="users")
@@ -11,27 +17,39 @@ public class User{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long Id;
 
+    @NotBlank(message = "First_Name is required")
     @Column(nullable=false)
-    private String name;
+    private String first_name;
 
-   @Column(nullable=false)
+    
+    @Column(nullable=true)
+    private String last_name;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid Email format")
+    @Column(nullable=false,unique = true)
     private String email;
-
+     
+    @NotBlank(message ="Password is required")
     @Column(nullable=false)
     private String password;
 
+    @NotBlank(message = "Role is required")
     @Column(nullable=false)
     private String role;
 
     @Column(nullable=true)
     private String phone;
 
+    @OneToMany(mappedBy = "organiser")
+    private List<Event> events;
     // constructor
     public User(){};
 
-    public User(String name,String email,String password,String role,String phone)
+    public User(String first_name,String last_name,String email,String password,String role,String phone)
     {
-        this.name=name;
+        this.first_name=first_name;
+        this.last_name=last_name;
         this.email=email;
         this.password=password;
         this.role=role;
@@ -50,15 +68,26 @@ public class User{
         this.Id=Id;
     }
 
-    public String getName()
+    public String getfirst_Name()
     {
-        return name;
+        return first_name;
     }
      
-    public void setName(String name)
+    public void setfirst_Name(String first_name)
     {
-        this.name=name;
+        this.last_name=first_name;
     }
+
+    public String getlast_Name()
+    {
+        return last_name;
+    }
+     
+    public void setlast_Name(String last_name)
+    {
+        this.last_name=last_name;
+    }
+
 
     public String getEmail()
     {
@@ -70,7 +99,7 @@ public class User{
         this.email=email;
     }
 
-    public String setPassword()
+    public String getPassword()
     {
         return password;
     }
@@ -99,4 +128,7 @@ public class User{
     {
         this.role=role;
     }
+
+    public List<Event> getEvents(){return events;}
+    public void setEvents(List<Event> events){this.events=events;}
 } 
